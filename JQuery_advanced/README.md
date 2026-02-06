@@ -48,7 +48,6 @@ JQuery_advanced/
 ├── 11-index.html   ← List + create post (POST)
 ├── 12-index.html   ← List + create + delete post
 ├── db.json         ← json-server data (tasks 10–12)
-├── package.json
 └── README.md
 ```
 
