@@ -6,6 +6,11 @@
     <meta charset="utf-8" />
     <title>Task 0</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        .loading {
+            opacity: 0.2;
+        }
+    </style>
 
 </head>
 
@@ -42,6 +47,17 @@
             });
         }
 
+        function displayLoading(loading) {
+            const firstUl = $('ul').first();
+            if (loading) {
+                firstUl.wrap($('<div>').addClass('loading'));
+            } else {
+                if (firstUl.parent().hasClass('loading')) {
+                    firstUl.unwrap();
+                }
+            }
+        }
+
         function addNewArticle(id, title, snippet) {
             const listItem = $('<li>');
             const firstParagraph = $('<p>');
@@ -73,7 +89,7 @@
                 origin: '*'
             };
 
-            $('#results').empty();
+            displayLoading(true);
 
             $.ajax({
                 url: endpoint,
@@ -81,6 +97,7 @@
                 dataType: 'json',
                 type: 'GET',
                 success: function (response) {
+                    $('#results').empty();
                     if (response && response.query && response.query.search) {
                         response.query.search.forEach(function (result) {
                             addNewArticle(
@@ -95,6 +112,8 @@
                         : 0;
                     buildPagination(totalhits, 10, offset);
                 }
+            }).always(function () {
+                displayLoading(false);
             });
         }
 
