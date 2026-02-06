@@ -17,15 +17,15 @@
 This project is a **progressive set of jQuery exercises** that go from loading jQuery and creating DOM elements to building **Wikipedia search** and **REST API** (json-server) integrations with forms, pagination, and CRUD operations.
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────────────┐
 │  Task 0–2   │  DOM basics (load, create elements, tables)        │
-├─────────────────────────────────────────────────────────────────┤
+├──────────────────────────────────────────────────────────────────┤
 │  Task 3–6   │  Family tree + form, replace, add/remove, Wikipedia│
-├─────────────────────────────────────────────────────────────────┤
+├──────────────────────────────────────────────────────────────────┤
 │  Task 7–9   │  Wikipedia search + pagination + loading state     │
-├─────────────────────────────────────────────────────────────────┤
+├──────────────────────────────────────────────────────────────────┤
 │  Task 10–12 │  json-server: list posts, create, delete           │
-└─────────────────────────────────────────────────────────────────┘
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 ---
