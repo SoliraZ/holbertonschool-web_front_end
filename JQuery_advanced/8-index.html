@@ -12,16 +12,25 @@
 <body>
 
     <script type="application/javascript">
+        let currentSearch = '';
+
         function createSearchForm() {
             const form = $('<form>');
             const searchInput = $('<input>').attr('type', 'text');
             const submitInput = $('<input>').attr('type', 'submit');
-            const resultsList = $('<ul>');
+            const resultsList = $('<ul>').attr('id', 'results');
+            const paginationList = $('<ul>').attr('id', 'pagination').css({
+                display: 'flex',
+                flexDirection: 'row',
+                listStyle: 'none',
+                padding: 0
+            });
 
             form.append(searchInput, submitInput);
 
             $('body').prepend(form);
             form.before(resultsList);
+            $('body').append(paginationList);
 
             form.on('submit', function (event) {
                 event.preventDefault();
@@ -46,21 +55,25 @@
             secondParagraph.html(snippet);
 
             listItem.append(firstParagraph, secondParagraph);
-            $('ul').append(listItem);
+            $('#results').append(listItem);
         }
 
-        function queryWikipedia(search) {
+        function queryWikipedia(search, offset) {
+            offset = offset === undefined ? 0 : offset;
+            currentSearch = search;
+
             const endpoint = 'https://en.wikipedia.org/w/api.php';
             const data = {
                 action: 'query',
                 list: 'search',
                 srsearch: search,
+                sroffset: offset,
+                srlimit: 10,
                 format: 'json',
                 origin: '*'
             };
 
-            // Clear previous results
-            $('ul').empty();
+            $('#results').empty();
 
             $.ajax({
                 url: endpoint,
@@ -77,8 +90,36 @@
                             );
                         });
                     }
+                    const totalhits = response && response.query && response.query.searchinfo
+                        ? response.query.searchinfo.totalhits
+                        : 0;
+                    buildPagination(totalhits, 10, offset);
                 }
             });
+        }
+
+        function buildPagination(numberOfItems, itemsPerPage, currentOffset) {
+            $('#pagination').empty();
+
+            const numberOfPages = Math.ceil(numberOfItems / itemsPerPage) || 1;
+
+            for (let pageNum = 1; pageNum <= numberOfPages; pageNum += 1) {
+                const pageOffset = (pageNum - 1) * itemsPerPage;
+                const isCurrentPage = pageOffset === currentOffset;
+
+                const item = $('<li>')
+                    .text(pageNum)
+                    .css({
+                        cursor: 'pointer',
+                        marginLeft: '10px',
+                        fontWeight: isCurrentPage ? 'bold' : 'normal'
+                    })
+                    .on('click', function () {
+                        queryWikipedia(currentSearch, pageOffset);
+                    });
+
+                $('#pagination').append(item);
+            }
         }
 
         $(document).ready(function () {
