@@ -3,7 +3,7 @@ window.setCookies = function () {
     const email = document.getElementById('email').value;
 
     const expirationDate = new Date();
-    expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+    expirationDate.setDate(expirationDate.getDate() + 10);
 
     document.cookie = `firstname=${firstname}; expires=${expirationDate.toUTCString()}; path=/`;
     document.cookie = `email=${email}; expires=${expirationDate.toUTCString()}; path=/`;
