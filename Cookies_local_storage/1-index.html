@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Cookies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-weight: bold;
+            font-size: 2em;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .login-section {
+            margin-bottom: 40px;
+        }
+
+        .login-form {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="text"] {
+            background-color: #FFFFFF;
+            border: 1px solid #CCCCCC;
+            padding: 2px 3px;
+            font-size: 1em;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        input[type="text"]::placeholder {
+            color: #808080;
+        }
+
+        button {
+            background-color: #ffffff;
+            border: 1px solid #c2c2c2;
+            border-radius: 5px;
+            padding: 3px 10px;
+            font-size: 1em;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000000;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #D0D0D0;
+        }
+
+        .cookies-section {
+            margin-top: 40px;
+        }
+    </style>
+
+    <script src="dist/bundle.js"></script>
+</head>
+
+<body>
+    <div class="login-section">
+        <h2>Login to the website</h2>
+        <div class="login-form">
+            <input type="text" id="firstname" placeholder="Firstname">
+            <input type="text" id="email" placeholder="Email">
+            <button type="button" onclick="setCookies()">Log me in</button>
+        </div>
+    </div>
+
+    <div class="cookies-section">
+        <h2>Cookies</h2>
+        <button type="button" onclick="showCookies()">Show the cookies</button>
+    </div>
+</body>
+
+</html>
