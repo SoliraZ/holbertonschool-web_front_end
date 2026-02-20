@@ -68,7 +68,26 @@
         }
     </style>
 
-    <script src="dist/bundle.js"></script>
+    <script>
+        function setCookies() {
+            const firstname = document.getElementById('firstname').value;
+            const email = document.getElementById('email').value;
+
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 10);
+
+            const expires = "expires=" + expirationDate.toUTCString();
+
+            document.cookie = "firstname=" + encodeURIComponent(firstname) + ";" + expires + ";path=/";
+            document.cookie = "email=" + encodeURIComponent(email) + ";" + expires + ";path=/";
+        }
+
+        function showCookies() {
+            const p = document.createElement('p');
+            p.innerHTML = "Cookies: " + document.cookie;
+            document.body.appendChild(p);
+        }
+    </script>
 </head>
 
 <body>
