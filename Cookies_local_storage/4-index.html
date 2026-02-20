@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Cookies (js-cookie)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-weight: bold;
+            font-size: 2.5em;
+            color: #000000;
+        }
+
+        h2 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-weight: bold;
+            font-size: 2em;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .login-section {
+            margin-bottom: 40px;
+        }
+
+        .login-form {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="text"] {
+            background-color: #FFFFFF;
+            border: 1px solid #CCCCCC;
+            padding: 2px 3px;
+            font-size: 1em;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        input[type="text"]::placeholder {
+            color: #808080;
+        }
+
+        button {
+            background-color: #ffffff;
+            border: 1px solid #c2c2c2;
+            border-radius: 5px;
+            padding: 3px 10px;
+            font-size: 1em;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000000;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #D0D0D0;
+        }
+    </style>
+
+    <!-- js-cookie CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+    <script>
+        function setCookiesAndShowWelcomeMessage() {
+            const firstname = document.getElementById('firstname').value;
+            const email = document.getElementById('email').value;
+
+            // 10 days using js-cookie
+            Cookies.set('firstname', firstname, { expires: 10, path: '/' });
+            Cookies.set('email', email, { expires: 10, path: '/' });
+
+            showWelcomeMessageOrForm();
+        }
+
+        function showForm() {
+            const welcome = document.getElementById('welcome-message');
+            if (welcome) {
+                welcome.remove();
+            }
+
+            const formDiv = document.getElementById('login-form');
+            if (formDiv) {
+                formDiv.style.display = 'block';
+            }
+        }
+
+        function hideForm() {
+            const formDiv = document.getElementById('login-form');
+            if (formDiv) {
+                formDiv.style.display = 'none';
+            }
+        }
+
+        function deleteCookiesAndShowForm() {
+            Cookies.remove('firstname', { path: '/' });
+            Cookies.remove('email', { path: '/' });
+            showForm();
+        }
+
+        function showWelcomeMessageOrForm() {
+            const firstname = Cookies.get('firstname');
+
+            if (!firstname) {
+                showForm();
+                return;
+            }
+
+            hideForm();
+
+            const existingWelcome = document.getElementById('welcome-message');
+            if (existingWelcome) {
+                existingWelcome.remove();
+            }
+
+            const h1 = document.createElement('h1');
+            h1.id = 'welcome-message';
+
+            const textNode = document.createTextNode("Welcome: " + firstname + " ");
+
+            const logoutLink = document.createElement('a');
+            logoutLink.href = "#";
+            logoutLink.textContent = "(logout)";
+            logoutLink.style.fontWeight = "normal";
+            logoutLink.style.fontStyle = "italic";
+            logoutLink.style.marginLeft = "10px";
+            logoutLink.style.color = "#000000";
+            logoutLink.style.textDecoration = "none";
+
+            logoutLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                deleteCookiesAndShowForm();
+            });
+
+            h1.appendChild(textNode);
+            h1.appendChild(logoutLink);
+
+            document.body.appendChild(h1);
+        }
+
+        window.onload = function () {
+            const loginButton = document.getElementById('login-button');
+            if (loginButton) {
+                loginButton.addEventListener('click', function () {
+                    setCookiesAndShowWelcomeMessage();
+                });
+            }
+            showWelcomeMessageOrForm();
+        };
+    </script>
+</head>
+
+<body>
+    <div class="login-section" id="login-form">
+        <h2>Login to the website</h2>
+        <div class="login-form">
+            <input type="text" id="firstname" placeholder="Firstname">
+            <input type="text" id="email" placeholder="Email">
+            <button type="button" id="login-button">Log me in</button>
+        </div>
+    </div>
+</body>
+
+</html>
+
